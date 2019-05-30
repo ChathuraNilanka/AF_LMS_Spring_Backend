@@ -1,0 +1,210 @@
+{
+	"info": {
+		"_postman_id": "12dc6daf-1e99-4193-8346-1f6a51415b98",
+		"name": "af group",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/lms/course/add",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"course_id\": \"IT3040\",\n\"name\": \"Application Frameworks\",\n\"description\": \"Application Frameworks description\",\n\"enroll_key\": \"IT3040\",\n\"credits\": \"4\",\n\"faculty\": \"Computing\",\n\"department\": \"SE\",\n\"instructor_id\": \"Ins123\",\n\"status\": \"inactive\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/lms/course/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"course",
+						"add"
+					]
+				},
+				"description": "lms"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/lms/course/all",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"fName\":\"test\",\n\"lName\":\"qqqqqqqq\",\n\"bDay\":\"2000-10-13\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/lms/course/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"course",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/lms/course/getbyid/5cef7775b9cf6b35e41abcbb",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "a",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "a",
+							"type": "text"
+						},
+						{
+							"key": "mobile",
+							"value": "0712345689",
+							"type": "text"
+						},
+						{
+							"key": "nic",
+							"value": "970950730V",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/lms/course/getbyid/5cef7775b9cf6b35e41abcbb",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"course",
+						"getbyid",
+						"5cef7775b9cf6b35e41abcbb"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/lms/course/remove/5cef77afb9cf6b35e41abcbe",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/lms/course/remove/5cef77afb9cf6b35e41abcbe",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"course",
+						"remove",
+						"5cef77afb9cf6b35e41abcbe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/lms/course/update/5cef7775b9cf6b35e41abcbb",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"course_id\": \"IT3040\",\n\"name\": \"Application Frameworks_Updated............!!!\",\n\"description\": \"Application Frameworks description\",\n\"enroll_key\": \"IT3040\",\n\"credits\": \"4\",\n\"faculty\": \"Computing\",\n\"department\": \"SE\",\n\"instructor_id\": \"Ins123\",\n\"status\": \"inactive\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/lms/course/update/5cef7775b9cf6b35e41abcbb",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"course",
+						"update",
+						"5cef7775b9cf6b35e41abcbb"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Train5",
+							"disabled": true
+						},
+						{
+							"key": "route",
+							"value": "a-z",
+							"disabled": true
+						},
+						{
+							"key": "type",
+							"value": "express",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
