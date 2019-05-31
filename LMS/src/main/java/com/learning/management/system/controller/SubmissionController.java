@@ -1,15 +1,21 @@
 package com.learning.management.system.controller;
 
 import com.learning.management.system.exception.ResourceNotFoundException;
+import com.learning.management.system.exception.UnprocessableEntityException;
 import com.learning.management.system.model.Submission;
 import com.learning.management.system.repo.SubmissionRepository;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.data.mongodb.gridfs.GridFsOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,22 +27,43 @@ public class SubmissionController {
 
     @Autowired
     private SubmissionRepository submissionRepository;
+    @Autowired
+    private ApplicationContext ctx;
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Submission add(@RequestParam("courseID") String coursID,@RequestParam("assignmentName") String assignmentName,@RequestParam("studentID") String studentID,@RequestParam("file") MultipartFile file) throws IOException {
+    public Submission add(@RequestParam("courseID") String courseID,@RequestParam("assignmentName") String assignmentName,@RequestParam("studentID") String studentID,@RequestParam("file") MultipartFile file) throws IOException {
+
+        if(file.isEmpty())
+            throw new UnprocessableEntityException();
+
+        GridFsOperations gridOperations = (GridFsOperations) ctx.getBean("gridFsTemplate");
+        DBObject metaData = new BasicDBObject();
+        metaData.put("for", "submission");
+
+        InputStream inputStream = new BufferedInputStream(file.getInputStream());
+
+        //set file name
+        String fileName = courseID + "_" + assignmentName + "_" + studentID;
+
+        //get file extention
+        String ext = "." + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
+
+        ObjectId id = gridOperations.store(inputStream, fileName + ext , file.getContentType(), metaData);
+
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
         Submission submission = new Submission();
         System.out.println(file.isEmpty());
-        submission.setFile(file.getBytes());
-        submission.setCourseId(coursID);
+        submission.setFile(id);
+        submission.setCourseId(courseID);
         submission.setAssigmentName(assignmentName);
         submission.setStudentId(studentID);
 
         Date now = new Date();
         submission.setCreatedAt(dateFormat.format(now));
         return submissionRepository.save(submission);
+
     }
 
     @GetMapping
