@@ -88,8 +88,6 @@ public class Course {
 	}
 	public void setTime_stamp(String time_stamp) {
 		this.time_stamp = time_stamp;
-	}
-	
-	
+	}	
 	
 }

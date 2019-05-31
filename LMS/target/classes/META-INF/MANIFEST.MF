@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: LMS
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: Chathura
+Built-By: Lanka
 Implementation-Vendor-Id: com.learning.management.system
-Build-Jdk: 1.8.0_181
+Build-Jdk: 1.8.0_161
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
  ot-starter-parent/LMS
 Created-By: Maven Integration for Eclipse
