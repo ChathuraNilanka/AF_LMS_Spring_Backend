@@ -1,23 +1,27 @@
 package com.learning.management.system.model;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 public class Submission {
-    private String _id;
+    @Id
+    private String id;
     private String courseId;
     private String assigmentName;
-    private String marks;
+    private double marks;
     private String studentId;
     private String createdAt;
     private String updatedAt;
-    private ObjectId file;
+    @Indexed(unique = true)
+    private String file;
 
-    public String get_id() {
-        return _id;
+    public String getId() {
+        return id;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getCourseId() {
@@ -36,11 +40,11 @@ public class Submission {
         this.assigmentName = assigmentName;
     }
 
-    public String getMarks() {
+    public double getMarks() {
         return marks;
     }
 
-    public void setMarks(String marks) {
+    public void setMarks(double marks) {
         this.marks = marks;
     }
 
@@ -67,11 +71,11 @@ public class Submission {
         this.updatedAt = updatedAt;
     }
 
-    public ObjectId getFile() {
+    public String getFile() {
         return file;
     }
 
-    public void setFile(ObjectId file) {
+    public void setFile(String file) {
         this.file = file;
     }
 }
