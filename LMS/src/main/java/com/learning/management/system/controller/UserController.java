@@ -42,6 +42,7 @@ public class UserController {
 		user.setCreated_at(dateFormat.format(date));
 		user.setUpdated_at(dateFormat.format(date));
 		user.setPassword(passwordEncoder.encode(user.getPassword()).toString());
+		
         return userRepository.save(user);
     }
 	
@@ -61,15 +62,20 @@ public class UserController {
     	User user = userRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException());
     	
-//    	course.setCourse_id(updatedCourse.getCourse_id());
-//    	course.setName(updatedCourse.getName());
-//    	course.setDescription(updatedCourse.getDescription());
-//    	course.setEnroll_key(updatedCourse.getEnroll_key());
-//    	course.setCredits(updatedCourse.getCredits());
-//    	course.setFaculty(updatedCourse.getFaculty());
-//    	course.setDepartment(updatedCourse.getDepartment());
-//    	course.setInstructor_id(updatedCourse.getInstructor_id());
-//    	course.setStatus(updatedCourse.getStatus());
+    	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+    	
+    	user.setFullname(updatedUser.getFullname());
+    	user.setPassword(updatedUser.getPassword());
+    	user.setPhone(updatedUser.getPhone());
+    	user.setGender(updatedUser.getGender());
+    	user.setFaculty(updatedUser.getFaculty());
+    	user.setStatus(updatedUser.getStatus());
+        user.setConfirmed(updatedUser.getConfirmed());
+        user.setConfirm_code(updatedUser.getConfirm_code());
+    	user.setUpdated_at(dateFormat.format(date));
+    	
+    	System.out.println(updatedUser.getStatus());
     	
         return userRepository.save(user);
     }
