@@ -1,13 +1,19 @@
 package com.learning.management.system.controller;
 
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.gridfs.GridFsOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,13 +22,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.learning.management.system.exception.ResourceNotFoundException;
+import com.learning.management.system.exception.UnprocessableEntityException;
 import com.learning.management.system.model.User;
 import com.learning.management.system.repo.UserRepository;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 
 
 @RestController
@@ -32,16 +44,37 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+    private ApplicationContext ctx;
+	
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
 	@PostMapping("/register")
     @ResponseStatus(code = HttpStatus.CREATED)
     public User add(@RequestBody User user) {
+		
+//		if (file.isEmpty())
+//            throw new UnprocessableEntityException();
+//		
+//		GridFsOperations gridOperations = (GridFsOperations) ctx.getBean("gridFsTemplate");
+//        DBObject metaData = new BasicDBObject();
+//        metaData.put("for", "userImage");
+//        
+//        InputStream inputStream = new BufferedInputStream(file.getInputStream());
+//        
+//        String fileName = user.getUsername();
+//        
+//        String ext = "." + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
+//        
+//        ObjectId imageId = gridOperations.store(inputStream, fileName + ext, file.getContentType(), metaData);
+        
+		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
 		user.setCreated_at(dateFormat.format(date));
 		user.setUpdated_at(dateFormat.format(date));
 		user.setPassword(passwordEncoder.encode(user.getPassword()).toString());
+		//user.setImage(imageId.toString());
 		
         return userRepository.save(user);
     }
@@ -76,6 +109,35 @@ public class UserController {
     	user.setUpdated_at(dateFormat.format(date));
     	
     	System.out.println(updatedUser.getStatus());
+    	
+        return userRepository.save(user);
+    }
+    
+    @RequestMapping(value = "image/{id}", method = RequestMethod.PUT)
+    public User updateImage(@PathVariable String id, @RequestBody MultipartFile file) throws IOException {
+    	User user = userRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException());
+    	
+    	if (file.isEmpty())
+            throw new UnprocessableEntityException();
+		
+		GridFsOperations gridOperations = (GridFsOperations) ctx.getBean("gridFsTemplate");
+        DBObject metaData = new BasicDBObject();
+        metaData.put("for", "userImage");
+        
+        InputStream inputStream = new BufferedInputStream(file.getInputStream());
+        
+        String fileName = user.getUsername();
+        
+        String ext = "." + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
+        
+        ObjectId imageId = gridOperations.store(inputStream, fileName + ext, file.getContentType(), metaData);
+    	
+    	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+    	
+		user.setImage(imageId.toString());
+		user.setUpdated_at(dateFormat.format(date));
     	
         return userRepository.save(user);
     }

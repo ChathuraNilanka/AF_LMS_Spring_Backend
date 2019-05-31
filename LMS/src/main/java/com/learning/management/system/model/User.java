@@ -29,6 +29,7 @@ public class User {
 	private String created_by;
 	private String created_at;
 	private String updated_at;
+	private String image;
 	
 	
 	
@@ -122,6 +123,11 @@ public class User {
 	public void setUpdated_at(String updated_at) {
 		this.updated_at = updated_at;
 	}
-	
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.id = image;
+	}
 	
 }
