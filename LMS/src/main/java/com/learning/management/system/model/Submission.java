@@ -1,8 +1,6 @@
 package com.learning.management.system.model;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
+import org.bson.types.ObjectId;
 
 public class Submission {
     private String _id;
@@ -12,7 +10,7 @@ public class Submission {
     private String studentId;
     private String createdAt;
     private String updatedAt;
-    private byte[] file;
+    private ObjectId file;
 
     public String get_id() {
         return _id;
@@ -69,11 +67,11 @@ public class Submission {
         this.updatedAt = updatedAt;
     }
 
-    public byte[] getFile() {
+    public ObjectId getFile() {
         return file;
     }
 
-    public void setFile(byte[] file) {
+    public void setFile(ObjectId file) {
         this.file = file;
     }
 }
