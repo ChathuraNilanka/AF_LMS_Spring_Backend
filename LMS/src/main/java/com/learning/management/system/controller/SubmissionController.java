@@ -28,6 +28,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/lms/submission")
+@CrossOrigin(origins = "http://localhost:3000")
 public class SubmissionController {
 
     @Autowired
