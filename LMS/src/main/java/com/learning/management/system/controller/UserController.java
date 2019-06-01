@@ -113,7 +113,7 @@ public class UserController {
         return userRepository.save(user);
     }
     
-    @RequestMapping(value = "image/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "image/{id}")
     public User updateImage(@PathVariable String id, @RequestBody MultipartFile file) throws IOException {
     	User user = userRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException());
