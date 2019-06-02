@@ -29,7 +29,7 @@ public class User {
 	private String created_by;
 	private String created_at;
 	private String updated_at;
-	private String image;
+	private String image = null;
 	
 	
 	
