@@ -15,6 +15,11 @@ public class Submission {
     private String updatedAt;
     @Indexed(unique = true)
     private String file;
+    private boolean isViewed;
+
+    public Submission() {
+        isViewed = false;
+    }
 
     public String getId() {
         return id;
@@ -77,5 +82,13 @@ public class Submission {
 
     public void setFile(String file) {
         this.file = file;
+    }
+
+    public boolean isViewed() {
+        return isViewed;
+    }
+
+    public void setViewed(boolean viewed) {
+        isViewed = viewed;
     }
 }
