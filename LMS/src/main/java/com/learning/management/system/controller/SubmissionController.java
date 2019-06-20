@@ -152,7 +152,7 @@ public class SubmissionController {
     }
 
     @PutMapping("/{id}")
-    public Submission update(@PathVariable String id, @RequestParam("marks") Double updatedMarks){
+    public Submission update(@PathVariable String id, @RequestParam("marks") Double updatedMarks, @RequestParam("isViewed") boolean isViewed){
         Submission submission = submissionRepository.findById(id).orElseThrow(()->new ResourceNotFoundException());
 
         if(submission==null)
@@ -162,8 +162,8 @@ public class SubmissionController {
         Date now = new Date();
 
         submission.setUpdatedAt(dateFormat.format(now));
-
         submission.setMarks(updatedMarks);
+        submission.setViewed(isViewed);
 
         return submissionRepository.save(submission);
     }
