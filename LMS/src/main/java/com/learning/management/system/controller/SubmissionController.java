@@ -11,6 +11,7 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.gridfs.GridFsOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -77,23 +78,13 @@ public class SubmissionController {
         return submissionRepository.findAll();
     }
 
-    @GetMapping(value = "/course/{courseID}")
-    public List<Submission> getSubmissionByCourseID(@PathVariable String courseID) {
-        List<Submission> result = submissionRepository.findByCourseId(courseID);
-
-        if (result != null) {
-            if (result.size() == 0)
-                throw new ResourceNotFoundException();
-        } else {
-            throw new ResourceNotFoundException();
-        }
-
-        return result;
-    }
-
     @GetMapping("/student/{studentID}")
     public List<Submission> getSubmissionByStudentId(@PathVariable String studentID) {
-        List<Submission> result = submissionRepository.findByStudentId(studentID);
+//        List<Submission> result = submissionRepository.findByStudentId(studentID);
+
+        Sort sort = new Sort(Sort.Direction.DESC, "updatedAt");
+        List<Submission> result = submissionRepository.findByStudentId(studentID,sort);
+
 
         if (result != null) {
             if (result.size() == 0)
@@ -161,7 +152,9 @@ public class SubmissionController {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date now = new Date();
 
-        submission.setUpdatedAt(dateFormat.format(now));
+        if(!isViewed)
+            submission.setUpdatedAt(dateFormat.format(now));
+
         submission.setMarks(updatedMarks);
         submission.setViewed(isViewed);
 
