@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.gridfs.GridFsOperations;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,6 +46,7 @@ import com.mongodb.client.gridfs.model.GridFSFile;
 
 
 @RestController
+@CrossOrigin(origins="http://localhost:3000")
 @RequestMapping("/lms/user")
 public class UserController {
 	
@@ -52,7 +54,7 @@ public class UserController {
 	private UserRepository userRepository;
 	
 	@Autowired
-    private ApplicationContext ctx;
+    private ApplicationContext context;
 	
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
@@ -112,7 +114,7 @@ public class UserController {
     	if (file.isEmpty())
             throw new UnprocessableEntityException();
 		
-		GridFsOperations gridOperations = (GridFsOperations) ctx.getBean("gridFsTemplate");
+		GridFsOperations gridOperations = (GridFsOperations) context.getBean("gridFsTemplate");
         DBObject metaData = new BasicDBObject();
         metaData.put("for", "userImage");
         
@@ -137,15 +139,15 @@ public class UserController {
     @GetMapping("/image/get/{id}")
     public void retrieveImageFile(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) throws IOException{
     	
-    	GridFsOperations gridOperations = (GridFsOperations) ctx.getBean("gridFsTemplate");
+    	GridFsOperations gridOperations = (GridFsOperations) context.getBean("gridFsTemplate");
     	
     	GridFSFile file = gridOperations.findOne(new Query().addCriteria(Criteria.where("_id").is(id)));
     	
     	try {
             response.setContentType(gridOperations.getResource(file).getContentType());
             response.setContentLength((new Long(file.getLength()).intValue()));
-            response.setHeader("content-Disposition", "attachment; filename=" + file.getFilename());// "attachment;filename=test.xls"
-            // copy it to response's OutputStream
+            response.setHeader("content-Disposition", "attachment; filename=" + file.getFilename());
+            
             IOUtils.copyLarge(gridOperations.getResource(file).getInputStream(), response.getOutputStream());
         } catch (IOException ex) {
             throw new RuntimeException("IOError writing file to output stream");
