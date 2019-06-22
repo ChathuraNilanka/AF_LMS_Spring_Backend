@@ -8,7 +8,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	
-  <groupId>com.learning.management.system</groupId>
+  <groupId>com.learning.management.system</groupId> 
   <artifactId>LMS</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>LMS</name>

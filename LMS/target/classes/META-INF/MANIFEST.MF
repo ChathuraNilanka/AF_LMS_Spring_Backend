@@ -3,8 +3,10 @@ Built-By: pasan
 Build-Jdk: 11.0.3
 Implementation-Title: LMS
 Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: Lanka
 Implementation-Vendor-Id: com.learning.management.system
-Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
- -starter-parent/LMS
+Build-Jdk: 1.8.0_161
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/LMS
 Created-By: Maven Integration for Eclipse
 
