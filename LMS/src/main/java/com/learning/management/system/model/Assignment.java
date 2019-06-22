@@ -10,7 +10,6 @@ public class Assignment {
 	@Id
 	private String id;
 	
-	@Indexed(unique = true)
 	private String assgnmentName;
 	
 	private String courseName;
@@ -18,6 +17,7 @@ public class Assignment {
 	private String instructorId;
 	private String deadLine;
 	private String time_stamp;
+	private String description;
 	
 	public String getAssgnmentName() {
 		return assgnmentName;

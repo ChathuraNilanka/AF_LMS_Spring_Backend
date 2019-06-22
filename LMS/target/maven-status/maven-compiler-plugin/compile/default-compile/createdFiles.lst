@@ -1,0 +1,11 @@
+com\learning\management\system\model\Course.class
+com\learning\management\system\repo\CourseRepository.class
+com\learning\management\system\repo\ExamRepository.class
+com\learning\management\system\exception\ResourceNotFoundException.class
+com\learning\management\system\model\Assignment.class
+com\learning\management\system\exception\UnprocessableEntityException.class
+com\learning\management\system\repo\AssignmentReposirory.class
+com\learning\management\system\controller\CourseController.class
+com\learning\management\system\controller\AssignmentController.class
+com\learning\management\system\model\Exams.class
+com\learning\management\system\lmsApplication.class

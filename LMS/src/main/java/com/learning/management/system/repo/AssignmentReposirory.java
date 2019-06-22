@@ -11,6 +11,6 @@ public interface AssignmentReposirory extends MongoRepository<Assignment, String
 
 //	List<Assignment> findByinstructorIdt(String instructorId);
 
-	List<Assignment> findAll(Query query);
+//	List<Assignment> findAll(Query query);
 	
 }
