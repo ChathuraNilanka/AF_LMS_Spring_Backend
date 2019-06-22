@@ -27,9 +27,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/lms/submission")
-@CrossOrigin(origins = "http://localhost:3000")
 public class SubmissionController {
 
     @Autowired
